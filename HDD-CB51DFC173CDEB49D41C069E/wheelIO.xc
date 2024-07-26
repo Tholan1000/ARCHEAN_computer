@@ -22,8 +22,6 @@ function @moveForwardBackward($accelerate:number)
 	@sendAccelerate($backRightWheelAlias, $accelerate * -1)
 
 function @sendSteer($wheelAlias:text, $steer:number)
-;	print($wheelAlias)
-;	print($steer)
 	output_number($wheelAlias, $steerChannel, $steer)
 	
 function @steerLeftRight($steer:number)

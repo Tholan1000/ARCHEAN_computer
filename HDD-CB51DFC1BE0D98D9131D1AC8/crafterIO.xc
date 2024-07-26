@@ -85,6 +85,7 @@ function @createKeyValueStackOfDependencies($rootRecipe:text, $rootAmount:number
 ; a sub part or sub recipe.
 function @getDesiredRecipes() : text
 	var $desigedRecipes = ""
+	var $numRecipes = 0
 
 ;	array $categories : text
 ;	$categories.from(@getCategories(), ",")
@@ -93,45 +94,50 @@ function @getDesiredRecipes() : text
 ;		if  (($category == "COMPONENTS") or ($category == "SPOOLS") or ($category == "TOOLS") or ($category == "CONSTRUCTION"))
 ;			array $recipes : text
 ;			$recipes.from(@getRecipiesForCategory($category), ",")
-		
+	
 ;			foreach $recipes ($recipesIndex, $recipe)
 ;				$desigedRecipes.$recipe = 0
+;				$numRecipes++
+;	print($numRecipes)
 
 	var $key = ""
-	$key = "CompositeBlock"
-	$desigedRecipes.$key = 2000
-	$key = "ConcreteBlock"
-	$desigedRecipes.$key = 2000
-	$key = "SteelBlock"
-	$desigedRecipes.$key = 2000
-	$key = "SteelBeam"
-	$desigedRecipes.$key = 1000
-	$key = "FluidPort"
-	$desigedRecipes.$key = 10
-	$key = "FluidJunction"
-	$desigedRecipes.$key = 10
-	$key = "LowVoltageRelay"
-	$desigedRecipes.$key = 10
-	$key = "LowVoltageBridge"
-	$desigedRecipes.$key = 10
-	$key = "DataBridge"
-	$desigedRecipes.$key = 10
-	$key = "ToggleButton"
-	$desigedRecipes.$key = 10
-	$key = "HighVoltageJunction"
-	$desigedRecipes.$key = 10
-	$key = "SmallPivot"
-	$desigedRecipes.$key = 4
-	$key = "Wheel"
-	$desigedRecipes.$key = 1
-	$key = "PilotSeat"
-	$desigedRecipes.$key = 1
-	$key = "HighVoltageCable"
-	$desigedRecipes.$key = 2
-	$key = "SpotLight"
-	$desigedRecipes.$key = 1
-	$key = "RTG"
+;	$key = "CompositeBlock"
+;	$desigedRecipes.$key = 4000
+;	$key = "ConcreteBlock"
+;	$desigedRecipes.$key = 2000
+;	$key = "SteelBlock"
+;	$desigedRecipes.$key = 2000
+;	$key = "SteelBeam"
+;	$desigedRecipes.$key = 1000
+;	$key = "FluidPort"
+;	$desigedRecipes.$key = 10
+;	$key = "FluidJunction"
+;	$desigedRecipes.$key = 10
+;	$key = "LowVoltageRelay"
+;	$desigedRecipes.$key = 10
+;	$key = "LowVoltageBridge"
+;	$desigedRecipes.$key = 10
+;	$key = "DataBridge"
+;	$desigedRecipes.$key = 10
+;	$key = "ToggleButton"
+;	$desigedRecipes.$key = 10
+;	$key = "HighVoltageJunction"
+;	$desigedRecipes.$key = 10
+;	$key = "SmallPivot"
+;	$desigedRecipes.$key = 4
+;	$key = "Wheel"
+;	$desigedRecipes.$key = 1
+;	$key = "PilotSeat"
+;	$desigedRecipes.$key = 1
+;	$key = "LowVoltageCable"
+;	$desigedRecipes.$key = 3
+;	$key = "SpotLight"
+;	$desigedRecipes.$key = 1
+;	$key = "RTG"
+;	$desigedRecipes.$key = 1
+;	$key = "Container"
+;	$desigedRecipes.$key = 5
+	$key = "Electrolyser"
 	$desigedRecipes.$key = 1
 	return $desigedRecipes
-	
 	
