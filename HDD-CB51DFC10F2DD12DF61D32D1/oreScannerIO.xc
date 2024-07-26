@@ -2,15 +2,15 @@ include "pivotIO.xc"
 
 const $oreScannerAlas = "oreScanner"
 
-var $maxDistanceOfScan = 1000
+var $maxDistanceOfScan = 75
 var $minDistanceOfScan = 0
 var $resolution = 1
 
 ; Configurable settings
-var $coneAngle = 40
+var $coneAngle = 30
 var $direction = 1
 var $increment = 1
-var $oreToScanFor = "Au"
+var $oreToScanFor = "C"
 
 var $distanceOfBestOreForCurrentScan = 0
 var $bestOreConcentrationForCurrentScan = 0
