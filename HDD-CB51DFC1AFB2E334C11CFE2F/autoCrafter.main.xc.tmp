@@ -3,9 +3,8 @@ include "dashBoardIO.xc"
 include "autoCrafterContainer.xc"
 include "electrolyserIO.xc"
 include "autoCrafterItemConveyorIO.xc"
-include "crusherIO.xc"
 
-storage var $desiredRecipes : text
+var $desiredRecipes : text
 var $desiredRecipeArrayIndex = 0
 var $itemToCraft = ""
 var $requiredAmountOfItem = 0
@@ -20,8 +19,7 @@ init
 	@turnOffConveyor($components2ItemConveyor)
 	@turnOffConveyor($everythingElseItemConveyor)
 	@turnOffCrafter()
-	if ($desiredRecipes == "")
-		$desiredRecipes = @getDesiredRecipes()
+	$desiredRecipes = @getDesiredRecipes()
 
 function @displayScreen($recipesForScreen : text)
 	@blankScreen()
@@ -144,20 +142,9 @@ function @stopCrafting()
 	@turnOffCrafter()
 	@setCrafterRecipe("Nothing")
 	@incrementDesiredRecipesIndex()
-	
-function @handleCrusher()
-	if (@getContainerItemAmountWithAlias($rockContainer, "Rock") > 0)
-		@turnOnCrusher()
-		@turnOnConveyor($rockConveyor)
-	else
-		@turnOffCrusher()
-		@turnOffConveyor($rockConveyor)
 
 update
 	@handleUi()
-
-update
-	@handleCrusher()
 
 update
 	if ($craftFailed)
