@@ -16,13 +16,6 @@ function @findBestOreThisTick()
 		$bestResult = $bestOreConcentrationForCurrentScan
 		$distanceOfBestOre = $distanceOfBestOreForCurrentScan
 		$bestAngle = $angle
-;		if ($distanceOfBestOre == 0)
-;			$bestAngle = $angle
-;			$distanceOfBestOre = $distanceOfBestOreForCurrentScan
-;		if ($distanceOfBestOreForCurrentScan <= $distanceOfBestOre)
-;			$distanceOfBestOre = $distanceOfBestOreForCurrentScan
-;			$bestAngle = $angle
-
 			
 function @findTargetOreIn360Arc()
 	if ($findingState == 0)
@@ -37,7 +30,7 @@ function @findTargetOreIn360Arc()
 	if ($angle >= 360)
 		$oreFound = 1
 	
-update
+update	
 	if ($oreFound == 0)
 		@findTargetOreIn360Arc()
 		$medianAngle = $bestAngle

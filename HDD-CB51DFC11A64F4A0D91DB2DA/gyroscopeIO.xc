@@ -6,8 +6,8 @@ const $sendGyroscopeControlChannel = 1
 function @setGyroscopeAlias($alias : text)
 	$gyroscopeAlias = $alias
 	
-function @setGyroscopeSpeed($speed : number)
+function @sendGyroscopeSpeed($speed : number)
 	output_number($gyroscopeAlias, $sendGyroscopeSpeedChannel, $speed)
 
-function @setGyroscopeControl($control : number)
+function @sendGyroscopeControl($control : number)
 	output_number($gyroscopeAlias, $sendGyroscopeControlChannel, $control)
