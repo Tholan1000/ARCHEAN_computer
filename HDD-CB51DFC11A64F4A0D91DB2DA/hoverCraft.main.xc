@@ -6,11 +6,11 @@ include "navInstrumentIO.xc"
 include "hoverCraftDashboardIO.xc"
 
 var $throttle = 0
-var $throttleIncrement = 0.005
+const $throttleIncrement = 0.005
 
 init
 	@setPilotSeatAlias("pilotSeat")
-	@setAllGryoscopeSpeed(1)
+	@setAllGryoscopeSpeed(0)
 	@setBeaconAlias("beacon")
 	@setNavInstrumentAlias("navInstrument")
 	@setDashboardAlias("dashboard")
