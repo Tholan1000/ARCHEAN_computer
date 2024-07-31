@@ -1,5 +1,6 @@
 var $beaconAlias : text
 
+const $beaconDataChannel = 0
 const $beaconDistanceChannel = 1
 const $beaconDirectionXChannel = 2
 const $beaconDirectionYChannel = 3
@@ -12,6 +13,9 @@ function @setBeaconAlias($alias : text)
 
 function @sendReceiveFrequency($frequency : text)
 	output_text($beaconAlias, $beaconReceiveFrequencyChannel, $frequency)
+
+function @getBeaconData() : text
+	return input_text($beaconAlias, $beaconDataChannel)
 
 function @getBeaconDistance() : number
 	return input_number($beaconAlias, $beaconDistanceChannel)

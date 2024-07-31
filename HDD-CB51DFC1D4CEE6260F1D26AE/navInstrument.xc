@@ -1,4 +1,4 @@
-var $navInstrumentAlias : text
+var $navInstrumentAlias = "navInstrument"
 
 const $navInstrumentLocCelestialChannel = 0
 const $navInstrumentDistaceChannel = 1
@@ -29,3 +29,4 @@ function @sendNavInstrumentDirXY($navAngle:number, $navDistance:number)
 	var $y = sin($navAngle) * $navDistance
 	@sendNavInstrumentLocDirX($x)
 	@sendNavInstrumentLocDirY($y)
+	

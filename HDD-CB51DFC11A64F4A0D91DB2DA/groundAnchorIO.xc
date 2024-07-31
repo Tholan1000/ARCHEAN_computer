@@ -1,4 +1,4 @@
-var $groundAnchorAlias : text
+var $groundAnchorAlias = "groundAnchor"
 
 const $groundEnchorEngageChannel = 0
 
