@@ -16,3 +16,8 @@ function @sendPivotAngle($angle:number)
 ; Both
 function @readPivotAngle() : number
 	return input_number($pivotAlias, $pivotReadAngleChannel) * 360
+	
+function @confirmAtAngle($angleToConfirm : number) : number
+	@sendPivotAngle($angleToConfirm)
+	var $actualAngle = @readPivotAngle()
+	return (round($angleToConfirm*1000) == round($actualAngle*1000))

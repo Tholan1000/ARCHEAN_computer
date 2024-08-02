@@ -17,7 +17,9 @@ function @itemBelongsInContainer1($item : text) : number
 			return 1
 		return 0
 	else
-		return 0
+		if ($item == "HDD")
+			return 1
+	return 0
 
 function @itemBelongsInContainer3($item : text) : number
 	var $category = @getCategoryForRecipe($item)

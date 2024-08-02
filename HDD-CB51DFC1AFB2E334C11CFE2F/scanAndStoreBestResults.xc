@@ -1,15 +1,14 @@
 include "pivotIO.xc"
+include "oreScannerIO.xc"
 
-const $oreScannerAlas = "oreScanner"
-
-var $maxDistanceOfScan = 6000
-var $minDistanceOfScan = 3000
-var $resolution = 5
+var $maxDistanceOfScan = 5500
+var $minDistanceOfScan = 5000
+var $resolution = 0.5
 
 ; Configurable settings
 var $coneAngle = 30
 var $direction = 1
-var $increment = 0.5
+var $increment = 4
 var $oreToScanFor = "Au"
 
 var $distanceOfBestOreForCurrentScan = 0
@@ -28,39 +27,18 @@ function @initialize()
 	$distanceOfBestOreForCurrentScan = 0
 	$bestOreConcentrationForCurrentScan = 0
 	
-function @controlScannerOscillation($medianAngle:number)
-	@sendPivotAngle($angle)
-	var $halfCone = $coneAngle/2
-	var $leftLimit = $medianAngle + $halfCone
-	var $rightLimit = $medianAngle - $halfCone
-	if ($angle > $leftLimit)
-		$direction = -1
-	if ($angle < $rightLimit)
-		$direction = 1
-	$angle = $angle + ($increment * $direction)
-	
-function @controlScannerRotation()
-	@sendPivotAngle($angle)
-	$angle = $angle + $increment
-
-function @scanForOre($channel : number, $distance : number)
-	output_number($oreScannerAlas, $channel, $distance)
-	
-function @getOreResult($channel : number) : text
-	return input_text($oreScannerAlas, $channel)
-	
 function @storeBestOreResults($ore : text)
 	$distanceOfBestOreForCurrentScan = 0
 	$bestOreConcentrationForCurrentScan = 0
 	var $numChannels = ($maxDistanceOfScan - $minDistanceOfScan) / $resolution
 	repeat $numChannels ($channel)
 		var $distance = $channel * $resolution + $minDistanceOfScan
-		@scanForOre($channel, $distance)
-		var $result = @getOreResult($channel)
+		@sendScanForOre($channel, $distance)
+		var $result = @readResultOfScan($channel)
 		if ($result == "")
 			print("Reached scanner limit")
 		else
-			if ($result.$ore >= $bestOreConcentrationForCurrentScan)
+			if ($result.$ore > $bestOreConcentrationForCurrentScan)
 				$bestOreConcentrationForCurrentScan = $result.$ore
 				$distanceOfBestOreForCurrentScan = $distance
 				
