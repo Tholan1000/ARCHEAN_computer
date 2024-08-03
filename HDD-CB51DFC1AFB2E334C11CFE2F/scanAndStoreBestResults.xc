@@ -1,15 +1,15 @@
 include "pivotIO.xc"
 include "oreScannerIO.xc"
 
-var $maxDistanceOfScan = 5500
-var $minDistanceOfScan = 5000
+var $maxDistanceOfScan = 17000
+var $minDistanceOfScan = 16000
 var $resolution = 0.5
 
 ; Configurable settings
 var $coneAngle = 30
 var $direction = 1
-var $increment = 4
-var $oreToScanFor = "Au"
+var $increment = 0.5
+var $oreToScanFor = "Ti"
 
 var $distanceOfBestOreForCurrentScan = 0
 var $bestOreConcentrationForCurrentScan = 0
@@ -41,4 +41,3 @@ function @storeBestOreResults($ore : text)
 			if ($result.$ore > $bestOreConcentrationForCurrentScan)
 				$bestOreConcentrationForCurrentScan = $result.$ore
 				$distanceOfBestOreForCurrentScan = $distance
-				

@@ -46,15 +46,16 @@ update
 		print("Best result for " & $oreToScanFor & " = " & $bestResult:text & " at an angle of " & $bestAngle:text & " at a distance of " & $distanceOfBestOre:text)
 	else
 		if ($tracking == 0)
-			@sendPivotAngle($bestAngle)
-			var $actualAngle = @readPivotAngle()
-			if (round($bestAngle*10000) == round($actualAngle*10000))
+			if (@confirmAtAngle($bestAngle))
 				@setOreToTrack($oreToScanFor)
 				@setDistanceToOre($distanceOfBestOre)
 				@setAngleToOre($bestAngle)
 				@setOreConcentration($bestResult)
 				$tracking = 1
 		else
+;			print("Angle to ore")
+;			print($angleToOre)
+;			print($distanceToOre)
 			@trackOre()
 		
 	

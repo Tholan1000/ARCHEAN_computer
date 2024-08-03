@@ -1,6 +1,9 @@
 include "mathLib.xc"
 
-var $oreToTrack = "Au"
+const $distanceToReaquire = 50
+const $amountToMovePerScan = 0.5
+
+var $oreToTrack : text
 var $distanceToOre : number
 var $angleToOre : number
 var $oreConcentration : number
@@ -8,8 +11,7 @@ var $oreConcentration : number
 var $startSearchAngle = 0
 var $endSearchAngle = 0
 
-const $distanceToReaquire = 50
-const $amountToMovePerScan = 0.5
+var $startedReadingScan = 0
 
 function @calculateDegreesToReaquire() : number
 	var $radians = atan($distanceToReaquire/$distanceToOre)
@@ -31,47 +33,58 @@ function @setAngleToOre($origAngle : number)
 function @setOreConcentration($concentration : number)
 	$oreConcentration = $concentration
 
-function @scanToReaquireOre() : number
+function @scanToReaquireOre()
+
 	var $maxReaquireDistance = $distanceToOre + $distanceToReaquire
 	var $minReaquireDistance = $distanceToOre - $distanceToReaquire
 	var $numChannelsToReaquire = ($maxReaquireDistance-$minReaquireDistance)/$amountToMovePerScan
 	repeat $numChannelsToReaquire ($channel)
 		var $distance = $channel * $amountToMovePerScan + $minReaquireDistance
-		print($distance)
 		@sendScanForOre($channel, $distance)
+	
+function @readScanToReaquireOre() : number
+	var $maxReaquireDistance = $distanceToOre + $distanceToReaquire
+	var $minReaquireDistance = $distanceToOre - $distanceToReaquire
+	var $numChannelsToReaquire = ($maxReaquireDistance-$minReaquireDistance)/$amountToMovePerScan
+	repeat $numChannelsToReaquire ($channel)
+		var $distance = $channel * $amountToMovePerScan + $minReaquireDistance
 		var $result = @readResultOfScan($channel)
 		if ($result == "")
 			print("Reached scanner limit")
 		else
 			if ($result.$oreToTrack == $oreConcentration)
-				print("Ore found")
-				print($minReaquireDistance)
-				print($maxReaquireDistance)
-;				$distanceToOre = $distance
+				$distanceToOre = $distance
 				return 1
 	return 0
 	
 function @trackOre()
 	var $numDegreesToReaquire = @calculateDegreesToReaquire()
 	var $numDegreesToIncrement = @calculateDegreesToIncrement($numDegreesToReaquire)
-	print("tracking ore")
+
 	if (@confirmAtAngle($angleToOre))
 		print("Angle confirmed")
-		if (@scanToReaquireOre())
-			print("Target locked")
-			print($distanceToOre)
-			print($angleToOre)
-			return
-		if ($startSearchAngle == 0)
-			$endSearchAngle = $angleToOre + $numDegreesToReaquire
-			$angleToOre = $angleToOre - $numDegreesToReaquire
-			$startSearchAngle = $angleToOre
+		@scanToReaquireOre()
+		if ($startedReadingScan == 0)
+			$startedReadingScan = 1
 		else
-			if ($angleToOre > $endSearchAngle)
-				print("Lost track of target")
-				$angleToOre = $startSearchAngle
+			if (@readScanToReaquireOre())
+				print("Target locked")
+				print($angleToOre)
+				print($distanceToOre)
 			else
-				$angleToOre = $angleToOre + $numDegreesToIncrement
-				print("Attempting to reaquire target")
-
+				print("Ore not aquired")
+				if ($startSearchAngle == 0)
+					$endSearchAngle = $angleToOre + $numDegreesToReaquire
+					$angleToOre = $angleToOre - $numDegreesToReaquire
+					$startSearchAngle = $angleToOre
+				else
+					if ($angleToOre > $endSearchAngle)
+						print("Lost track of target")
+						$angleToOre = $startSearchAngle
+					else
+						$angleToOre = $angleToOre + $numDegreesToIncrement
+						print("Attempting to reaquire target")
+	else
+		print("Aligning to angle " & $angleToOre:text)
+		
 	
