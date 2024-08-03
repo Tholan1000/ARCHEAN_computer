@@ -1,4 +1,4 @@
-var $propellerAlias : text
+var $propellerAlias = "propeller"
 
 const $sendPropellerSpeedChannel = 0
 const $sendPropellerPitchChannel = 1

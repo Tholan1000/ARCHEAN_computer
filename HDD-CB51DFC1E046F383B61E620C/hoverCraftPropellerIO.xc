@@ -31,6 +31,7 @@ function @sendHoverCraftUpDown()
 	@sendRightRearPropellerSpeed($hoverCraftThrottle)
 	
 function @sendThrottleHoverCraftUpDown($throttle : number)
+	print($hoverCraftThrottle)
 	$hoverCraftThrottle = $hoverCraftThrottle + $hoverCraftThrottleInc * $throttle
 	if ($hoverCraftThrottle > 1)
 		$hoverCraftThrottle = 1
