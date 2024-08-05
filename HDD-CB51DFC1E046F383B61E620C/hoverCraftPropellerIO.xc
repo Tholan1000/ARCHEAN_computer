@@ -1,42 +1,45 @@
-include "propellerIO.xc"
+include "vectoredPropellerIO.xc"
 
 const $leftFrontPropellerAlias = "leftFrontPropeller"
 const $rightFrontPropellerAlias = "rightFrontPropeller"
-const $leftRearPropellerAlias = "leftRearPropeller"
-const $rightRearPropellerAlias = "rightRearPropeller"
+const $leftBackPropellerAlias = "leftBackPropeller"
+const $rightBackPropellerAlias = "rightBackPropeller"
 
-var $hoverCraftThrottle = 0
-const $hoverCraftThrottleInc = 0.005
+var $propellerSpeed = 0
+var $propellerIncrement = 0.01
 
-function @sendLeftFrontPropellerSpeed($speed : number)
-	@setPropellerAlias($leftFrontPropellerAlias)
-	@sendPropellerSpeed($speed)
+function @sendHoverCraftIncUpDown($upDown : number)
+	$propellerSpeed = $propellerSpeed + $propellerIncrement * $upDown
+	if ($propellerSpeed > 1)
+		$propellerSpeed = 1
+	if ($propellerSpeed < 0)
+		$propellerSpeed = 0
+	@setVectoredPropellerAlias($leftFrontPropellerAlias)
+	@sendPropellerSpeed($propellerSpeed)
+	@setVectoredPropellerAlias($rightFrontPropellerAlias)
+	@sendPropellerSpeed($propellerSpeed * -1)
+	@setVectoredPropellerAlias($leftBackPropellerAlias)
+	@sendPropellerSpeed($propellerSpeed)
+	@setVectoredPropellerAlias($rightBackPropellerAlias)
+	@sendPropellerSpeed($propellerSpeed * -1)
 	
-function @sendRightFrontPropellerSpeed($speed : number)
-	@setPropellerAlias($rightFrontPropellerAlias)
-	@sendPropellerSpeed($speed)
+function @sendHoverCraftLeftRight($angle : number)
+	@setVectoredPropellerAlias($leftFrontPropellerAlias)
+	@sendPropellerLeftRightAngle($angle * -1)
+	@setVectoredPropellerAlias($rightFrontPropellerAlias)
+	@sendPropellerLeftRightAngle($angle)
+	@setVectoredPropellerAlias($leftBackPropellerAlias)
+	@sendPropellerLeftRightAngle($angle * -1)
+	@setVectoredPropellerAlias($rightBackPropellerAlias)
+	@sendPropellerLeftRightAngle($angle)
 	
-function @sendLeftRearPropellerSpeed($speed : number)
-	@setPropellerAlias($leftRearPropellerAlias)
-	@sendPropellerSpeed($speed)
-	
-function @sendRightRearPropellerSpeed($speed : number)
-	@setPropellerAlias($rightRearPropellerAlias)
-	@sendPropellerSpeed($speed)
+function @sendHoverCraftFrontBack($angle : number)
+	@setVectoredPropellerAlias($leftFrontPropellerAlias)
+	@sendPropellerFrontBackAngle($angle)
+	@setVectoredPropellerAlias($rightFrontPropellerAlias)
+	@sendPropellerFrontBackAngle($angle * -1)
+	@setVectoredPropellerAlias($leftBackPropellerAlias)
+	@sendPropellerFrontBackAngle($angle)
+	@setVectoredPropellerAlias($rightBackPropellerAlias)
+	@sendPropellerFrontBackAngle($angle * -1)
 
-function @sendHoverCraftUpDown()
-	@sendLeftFrontPropellerSpeed($hoverCraftThrottle * -1)
-	@sendRightFrontPropellerSpeed($hoverCraftThrottle)
-	@sendLeftRearPropellerSpeed($hoverCraftThrottle * -1)
-	@sendRightRearPropellerSpeed($hoverCraftThrottle)
-	
-function @sendThrottleHoverCraftUpDown($throttle : number)
-	print($hoverCraftThrottle)
-	$hoverCraftThrottle = $hoverCraftThrottle + $hoverCraftThrottleInc * $throttle
-	if ($hoverCraftThrottle > 1)
-		$hoverCraftThrottle = 1
-	elseif ($hoverCraftThrottle < 0)
-		$hoverCraftThrottle = 0
-	@sendHoverCraftUpDown()
-	
-			

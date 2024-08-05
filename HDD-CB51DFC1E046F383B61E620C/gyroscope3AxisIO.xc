@@ -1,8 +1,8 @@
 include "gyroscopeIO.xc"
 
-const $gyroYawAlias = "gyroYaw"
-const $gyroRollAlias = "gyroRoll"
-const $gyroPitchAlias = "gyroPitch"
+var $gyroYawAlias = "gyroYaw"
+var $gyroRollAlias = "gyroRoll"
+var $gyroPitchAlias = "gyroPitch"
 
 function @sendAllGryoscopeSpeed($speed : number)
 	@setGyroscopeAlias($gyroYawAlias)

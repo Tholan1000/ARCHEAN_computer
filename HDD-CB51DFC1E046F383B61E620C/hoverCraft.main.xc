@@ -1,13 +1,14 @@
 include "pilotSeatIO.xc"
 include "hoverCraftPropellerIO.xc"
-include "hoverCraftGyroIO.xc"
+include "gyroscope3AxisIO.xc"
 
 init
-	@setPilotSeatAlias("pilotSeat")
 	@sendAllGryoscopeSpeed(0)
 
 update
-	@sendThrottleHoverCraftUpDown(@readPilotSeatDownUp())
+	@sendHoverCraftIncUpDown(@readPilotSeatDownUp())
+	@sendHoverCraftLeftRight(@readPilotSeatLeftRight())
+	@sendHoverCraftFrontBack(@readPilotSeatBackFront())
 	@sendGyroscopeYawControl(@readPilotSeatYaw())
 	@sendGyroscopeRollControl(@readPilotSeatRoll())
 	@sendGyroscopePitchControl(@readPilotSeatPitch())

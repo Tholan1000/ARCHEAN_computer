@@ -1,4 +1,4 @@
-var $gyroscopeAlias : text
+var $gyroscopeAlias = "gyroscope"
 
 const $sendGyroscopeSpeedChannel = 0
 const $sendGyroscopeControlChannel = 1

@@ -16,9 +16,6 @@ function @itemBelongsInContainer1($item : text) : number
 		if ($startsWith == "K" or $startsWith == "L")
 			return 1
 		return 0
-	else
-		if ($item == "HDD")
-			return 1
 	return 0
 
 function @itemBelongsInContainer3($item : text) : number
@@ -35,8 +32,9 @@ function @itemBelongsInContainer2($item : text) : number
 		if ($startsWith == "W" or $startsWith == "X" or $startsWith == "Y" or $startsWith == "Z")
 			return 1
 		return 0
-	else
-		return 0
+	if ($item == "HDD")
+		return 1
+	return 0
 
 
 function @getContainerItemAmount($item : text) : number
