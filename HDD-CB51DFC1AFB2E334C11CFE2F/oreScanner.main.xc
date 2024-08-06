@@ -7,18 +7,22 @@ var $oreFound = 0
 var $medianAngle = 0
 var $tracking = 0
 var $ticksToWait = 0
+var $startedReading360Scan = 0
 
 init
 	@initialize()
 	
 function @findBestOreThisTick()
-	@sendScanForOre()
-	@storeBestOreResults($oreToScanFor)
+	@scanForOre($oreToScanFor)
+	if ($startedReading360Scan == 0)
+		$startedReading360Scan = 1
+	else
+		@storeBestOreResults($oreToScanFor)
 	
-	if ($bestOreConcentrationForCurrentScan >= $bestResult)
+	if ($bestOreConcentrationForCurrentScan > $bestResult)
 		$bestResult = $bestOreConcentrationForCurrentScan
 		$distanceOfBestOre = $distanceOfBestOreForCurrentScan
-		$bestAngle = $angle - $increment
+		$bestAngle = $angle
 			
 function @findTargetOreIn360Arc()
 	if ($findingState == 0)
@@ -56,7 +60,7 @@ update
 ;			print("Angle to ore")
 ;			print($angleToOre)
 ;			print($distanceToOre)
-			@trackOre()
+;			@trackOre()
 		
 	
 

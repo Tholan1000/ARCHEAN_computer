@@ -11,7 +11,7 @@ function @findBestOreThisTick()
 		$bestResult = $bestOreConcentrationForCurrentScan
 		$distanceOfBestOre = $distanceOfBestOreForCurrentScan
 		$bestAngle = $angle
-			
+		
 function @findTargetOreIn360Arc()
 	if ($findingState == 0)
 		$findingState = 1

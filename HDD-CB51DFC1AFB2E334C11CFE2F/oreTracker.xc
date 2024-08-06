@@ -1,6 +1,6 @@
 include "mathLib.xc"
 
-const $distanceToReaquire = 50
+const $distanceToReaquire = 5
 const $amountToMovePerScan = 0.5
 
 var $oreToTrack : text
@@ -11,7 +11,7 @@ var $oreConcentration : number
 var $startSearchAngle = 0
 var $endSearchAngle = 0
 
-var $startedReadingScan = 0
+var $startedReadingTrackingScan = 0
 
 function @calculateDegreesToReaquire() : number
 	var $radians = atan($distanceToReaquire/$distanceToOre)
@@ -34,7 +34,6 @@ function @setOreConcentration($concentration : number)
 	$oreConcentration = $concentration
 
 function @scanToReaquireOre()
-
 	var $maxReaquireDistance = $distanceToOre + $distanceToReaquire
 	var $minReaquireDistance = $distanceToOre - $distanceToReaquire
 	var $numChannelsToReaquire = ($maxReaquireDistance-$minReaquireDistance)/$amountToMovePerScan
@@ -64,8 +63,8 @@ function @trackOre()
 	if (@confirmAtAngle($angleToOre))
 		print("Angle confirmed")
 		@scanToReaquireOre()
-		if ($startedReadingScan == 0)
-			$startedReadingScan = 1
+		if ($startedReadingTrackingScan == 0)
+			$startedReadingTrackingScan = 1
 		else
 			if (@readScanToReaquireOre())
 				print("Target locked")

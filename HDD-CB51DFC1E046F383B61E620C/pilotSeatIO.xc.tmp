@@ -1,4 +1,4 @@
-var $pilotSeatAlias = "pilotSeat"
+fvar $pilotSeatAlias = "pilotSeat"
 
 const $pilotSeatInUseChannel = 0
 const $pilotSeatBackFrontChannel = 1

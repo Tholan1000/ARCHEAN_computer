@@ -11,7 +11,7 @@ function @setAllGryoscopeSpeed($speed : number)
 	@sendGyroscopeSpeed($speed)
 	@setGyroscopeAlias($gyroXzAlias)
 	@sendGyroscopeSpeed($speed)
-
+	
 function @sendGyroscopeXyControl($control : number)
 	@setGyroscopeAlias($gyroXyAlias)
 	@sendGyroscopeControl($control)

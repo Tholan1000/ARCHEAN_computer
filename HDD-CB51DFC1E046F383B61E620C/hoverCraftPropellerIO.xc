@@ -6,10 +6,15 @@ const $leftBackPropellerAlias = "leftBackPropeller"
 const $rightBackPropellerAlias = "rightBackPropeller"
 
 var $propellerSpeed = 0
-var $propellerIncrement = 0.01
+var $propellerSpeedIncrement = 0.01
+var $propellerPitch = 0
+var $propellerPitchIncrement = 0.01
+var $propellerFrontBackAngle = 0
+var $propellerFrontBackIncrement = 0.025
+var $navControlFullStopMode = 1
 
 function @sendHoverCraftIncUpDown($upDown : number)
-	$propellerSpeed = $propellerSpeed + $propellerIncrement * $upDown
+	$propellerSpeed = $propellerSpeed + $propellerSpeedIncrement * $upDown
 	if ($propellerSpeed > 1)
 		$propellerSpeed = 1
 	if ($propellerSpeed < 0)
@@ -23,6 +28,21 @@ function @sendHoverCraftIncUpDown($upDown : number)
 	@setVectoredPropellerAlias($rightBackPropellerAlias)
 	@sendPropellerSpeed($propellerSpeed * -1)
 	
+function @sendHoverCraftPropellerPitch($upDown : number)
+	$propellerPitch = $propellerPitch + $propellerPitchIncrement * $upDown
+	if ($propellerPitch > 1)
+		$propellerPitch = 1
+	if ($propellerPitch < 0)
+		$propellerPitch = 0
+	@setVectoredPropellerAlias($leftFrontPropellerAlias)
+	@sendPropellerPitch($propellerPitch)
+	@setVectoredPropellerAlias($rightFrontPropellerAlias)
+	@sendPropellerPitch($propellerPitch * -1)
+	@setVectoredPropellerAlias($leftBackPropellerAlias)
+	@sendPropellerPitch($propellerPitch)
+	@setVectoredPropellerAlias($rightBackPropellerAlias)
+	@sendPropellerPitch($propellerPitch * -1)
+	
 function @sendHoverCraftLeftRight($angle : number)
 	@setVectoredPropellerAlias($leftFrontPropellerAlias)
 	@sendPropellerLeftRightAngle($angle * -1)
@@ -34,12 +54,20 @@ function @sendHoverCraftLeftRight($angle : number)
 	@sendPropellerLeftRightAngle($angle)
 	
 function @sendHoverCraftFrontBack($angle : number)
+	if ($navControlFullStopMode)
+		$propellerFrontBackAngle = $angle
+	else
+		$propellerFrontBackAngle = $propellerFrontBackAngle + $propellerFrontBackIncrement * $angle
+		if ($propellerFrontBackAngle > 1)
+			$propellerFrontBackAngle = 1
+		if ($propellerFrontBackAngle < -1)
+			$propellerFrontBackAngle = -1
 	@setVectoredPropellerAlias($leftFrontPropellerAlias)
-	@sendPropellerFrontBackAngle($angle)
+	@sendPropellerFrontBackAngle($propellerFrontBackAngle)
 	@setVectoredPropellerAlias($rightFrontPropellerAlias)
-	@sendPropellerFrontBackAngle($angle * -1)
+	@sendPropellerFrontBackAngle($propellerFrontBackAngle * -1)
 	@setVectoredPropellerAlias($leftBackPropellerAlias)
-	@sendPropellerFrontBackAngle($angle)
+	@sendPropellerFrontBackAngle($propellerFrontBackAngle)
 	@setVectoredPropellerAlias($rightBackPropellerAlias)
-	@sendPropellerFrontBackAngle($angle * -1)
+	@sendPropellerFrontBackAngle($propellerFrontBackAngle * -1)
 

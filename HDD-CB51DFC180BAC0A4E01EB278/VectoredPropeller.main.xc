@@ -11,3 +11,4 @@ update
 	@sendAngleToPivot(@readFrontBackAngle())
 	@sendAngleToHInge(@readLeftRightAngle())
 	@sendPropellerSpeed(@readPropellerSpeed())
+	@sendPropellerPitch(@readPropellerPitch())
