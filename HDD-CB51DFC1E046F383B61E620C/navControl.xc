@@ -2,28 +2,93 @@ include "navInstrumentIO.xc"
 include "pilotSeatIO.xc"
 
 const $stabilityMultiplier = 10
+var $prevVertSpeed = 0
+
+function @easeInPropellerPitchAltitudeChange($speed : number) : number
+	var $diff = $speed - $prevVertSpeed
+	var $retVal = 0
+	if ($speed > 1)
+		if ($diff > 0.05)
+			$retVal = -1
+		elseif ($diff > 0.025)
+			$retVal = -0.75
+		elseif ($diff >= 0)
+			$retVal = -0.5
+		elseif ($diff < 0)
+			$retVal = -0.25
+		elseif ($diff < 0.25)
+			$retVal = 0
+	elseif ($speed > 0.5)
+		if ($diff > 0.05)
+			$retVal = -0.5
+		elseif ($diff > 0)
+			$retVal = -0.2
+		elseif ($diff == 0)
+			$retVal = -0.1
+		else
+			$retVal = 0
+	elseif ($speed > 0)
+		if ($diff > 0.05)
+			$retVal = -0.25
+		elseif ($diff > 0)
+			$retVal = -0.1
+		elseif ($diff == 0)
+			$retVal = -0.05
+		else
+			$retVal = 0
+	if ($speed < -1)
+		if ($diff < -0.05)
+			$retVal = 1
+		elseif ($diff < -0.025)
+			$retVal = 0.75
+		elseif ($diff <= -0)
+			$retVal = 0.5
+		elseif ($diff > 0)
+			$retVal = 0.25
+		elseif ($diff > 0.25)
+			$retVal = 0
+	elseif ($speed < -0.5)
+		if ($diff < -0.05)
+			$retVal = 0.5
+		elseif ($diff < 0)
+			$retVal = 0.2
+		elseif ($diff == 0)
+			$retVal = 0.1
+		else
+			$retVal = 0
+	elseif ($speed < 0)
+		if ($diff < -0.05)
+			$retVal = 0.25
+		elseif ($diff < 0)
+			$retVal = 0.1
+		elseif ($diff == 0)
+			$retVal = -0.05
+		else
+			$retVal = 0
+	$prevVertSpeed = $speed
+	return $retVal
 
 function @easeInControlChange($speed : number) : number
 	if ($speed > 8)
 		return -1
 	elseif ($speed > 5)
-		return -0.1
+		return -0.5
 	elseif ($speed > 1)
-		return -0.01
-	elseif ($speed > 0.01)
-		return -0.005
+		return -0.2
+	elseif ($speed > 0.5)
+		return -0.1
 	elseif ($speed > 0)
-		return -0.001
+		return -0.05
 	elseif ($speed < -8)
 		return 1
 	elseif ($speed < -5)
-		return 0.75
+		return 0.5
 	elseif ($speed < -1)
 		return 0.2
-	elseif ($speed < -0.01)
-		return 0.0075
-	elseif ($speed < -0)
-		return 0.002
+	elseif ($speed < -0.5)
+		return 0.1
+	elseif ($speed < 0)
+		return 0.05
 	return 0
 	
 function @easeInFrontBack($speed : number) : number
@@ -33,20 +98,20 @@ function @easeInFrontBack($speed : number) : number
 		return -0.2
 	elseif ($speed > 1)
 		return -0.1
-	elseif ($speed > 0.01)
-		return -0.01
+	elseif ($speed > 0.1)
+		return -0.05
 	elseif ($speed > 0)
-		return -0.001
+		return -0.01
 	elseif ($speed < -8)
 		return 1
 	elseif ($speed < -5)
 		return 0.2
 	elseif ($speed < -1)
 		return 0.1
-	elseif ($speed < -0.01)
-		return 0.01
+	elseif ($speed < -0.1)
+		return 0.05
 	elseif ($speed < -0)
-		return 0.001
+		return 0.01
 	return 0
 			
 function @readNavControlPropellerSpeed() : number
@@ -56,7 +121,7 @@ function @readNavControlPropellerPitch() : number
 	var $pilotDownUp = @readPilotSeatDownUp()
 	if ($pilotDownUp != 0)
 		return -1
-	return @easeInControlChange(@readNavInstrumentVerticalSpeed()) * -3
+	return @easeInPropellerPitchAltitudeChange(@readNavInstrumentVerticalSpeed()) * -1
 
 function @readNavControlLeftRight() : number
 	var $pilotLeftRight = @readPilotSeatLeftRight()

@@ -22,7 +22,7 @@ function @findBestOreThisTick()
 	if ($bestOreConcentrationForCurrentScan > $bestResult)
 		$bestResult = $bestOreConcentrationForCurrentScan
 		$distanceOfBestOre = $distanceOfBestOreForCurrentScan
-		$bestAngle = $angle
+		$bestAngle = $angle - $increment
 			
 function @findTargetOreIn360Arc()
 	if ($findingState == 0)
@@ -57,10 +57,7 @@ update
 				@setOreConcentration($bestResult)
 				$tracking = 1
 		else
-;			print("Angle to ore")
-;			print($angleToOre)
-;			print($distanceToOre)
-;			@trackOre()
+			@trackOre()
 		
 	
 

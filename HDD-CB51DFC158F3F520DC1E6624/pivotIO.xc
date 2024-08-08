@@ -1,4 +1,4 @@
-var $pivotAlias = "pivot"
+var $pivotAlias = 1
 
 const $pivotReadAngleChannel = 0
 const $pivotSendAngleChannel = 0
@@ -20,4 +20,5 @@ function @readPivotAngle() : number
 function @confirmAtAngle($angleToConfirm : number) : number
 	@sendPivotAngle($angleToConfirm)
 	var $actualAngle = @readPivotAngle()
-	return (round($angleToConfirm*100) == round($actualAngle*100))
+	$angleToConfirm = @normalizeAngle($angleToConfirm)
+	return (round($angleToConfirm*1000) == round($actualAngle*1000))

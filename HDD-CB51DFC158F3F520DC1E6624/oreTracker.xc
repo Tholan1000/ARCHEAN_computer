@@ -1,7 +1,7 @@
 include "mathLib.xc"
 
-const $distanceToReaquire = 25
-const $amountToMovePerScan = 0.2
+const $distanceToReaquire = 10
+const $amountToMovePerScan = 0.05
 
 var $oreToTrack : text
 var $distanceToOre : number
@@ -79,14 +79,10 @@ function @trackOre()
 				print("Target locked")
 				print($angleToOre)
 				print($distanceToOre)
-				print("Degrees to reaquire " & $numDegreesToReaquire:text)
-				print("Degrees to increment " & $numDegreesToIncrement:text)
 			else
 				print("Target not locked")
 				print($angleToOre)
 				print($distanceToOre)
-				print("Degrees to reaquire " & $numDegreesToReaquire:text)
-				print("Degrees to increment " & $numDegreesToIncrement:text)
 				if ($startReaquireAngleSearch == 0)
 					$searchAngleCount = 0
 					$numAnglesToCheck = (2*$numDegreesToReaquire)/$numDegreesToIncrement
@@ -98,7 +94,5 @@ function @trackOre()
 					if ($searchAngleCount > $numAnglesToCheck)
 						print("Lost track or ore. Trying again at last angle.")
 						$startReaquireAngleSearch = 0
-	else
-;		print("Aligning to angle " & $angleToOre:text)
 		
 	
